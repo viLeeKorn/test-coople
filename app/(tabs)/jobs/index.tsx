@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, use } from 'react';
 import {
   View,
   Text,
@@ -9,7 +9,7 @@ import {
   RefreshControl,
   SafeAreaView,
 } from 'react-native';
-import { useRouter } from 'expo-router';
+import { useRouter, useFocusEffect } from 'expo-router';
 import { MaterialIcons } from '@expo/vector-icons';
 import { Job, addToFavorites, removeFromFavorites, isFavorite } from '../../../utils/favorites';
 
@@ -97,6 +97,12 @@ export default function JobsScreen() {
       console.error('Error toggling favorite:', error);
     }
   };
+
+  useFocusEffect(
+    React.useCallback(() => {
+      loadFavoriteStates(jobs);
+    }, [jobs])
+  );
 
   useEffect(() => {
     fetchJobs(0, false);

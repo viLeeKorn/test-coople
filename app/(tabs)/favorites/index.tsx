@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import {
   View,
   Text,
@@ -9,9 +9,9 @@ import {
   RefreshControl,
   SafeAreaView,
 } from 'react-native';
-import { useRouter } from 'expo-router';
+import { useRouter, useFocusEffect } from 'expo-router';
 import { MaterialIcons } from '@expo/vector-icons';
-import { Job, addToFavorites, removeFromFavorites, isFavorite, getFavorites } from '../../../utils/favorites';
+import { Job, removeFromFavorites, getFavorites } from '../../../utils/favorites';
 
 export default function FavoritesScreen() {
   const [favorites, setFavorites] = useState<Job[]>([]);
@@ -21,6 +21,7 @@ export default function FavoritesScreen() {
 
   const loadFavorites = async () => {
     try {
+      setLoading(true)
       const favoriteJobs = await getFavorites();
       setFavorites(favoriteJobs);
     } catch (error) {
@@ -31,9 +32,11 @@ export default function FavoritesScreen() {
     }
   };
 
-  useEffect(() => {
-    loadFavorites();
-  }, []);
+  useFocusEffect(
+    React.useCallback(() => {
+      loadFavorites();
+    }, [])
+  );
 
   const onRefresh = () => {
     setRefreshing(true);
@@ -137,7 +140,7 @@ export default function FavoritesScreen() {
     );
   }
 
-  if (favorites.length === 0) {
+  if (!loading && favorites.length === 0) {
     return (
       <SafeAreaView style={styles.container}>
         <View style={styles.emptyContainer}>

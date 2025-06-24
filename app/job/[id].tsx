@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import {
   View,
   Text,
@@ -8,7 +8,7 @@ import {
   TouchableOpacity,
   SafeAreaView,
 } from 'react-native';
-import { useLocalSearchParams, useRouter } from 'expo-router';
+import { useLocalSearchParams, useRouter, useFocusEffect } from 'expo-router';
 import { MaterialIcons } from '@expo/vector-icons';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Job, addToFavorites, removeFromFavorites, isFavorite } from '../../utils/favorites';
@@ -22,9 +22,11 @@ export default function JobDetailsScreen() {
   const router = useRouter();
   const insets = useSafeAreaInsets();
 
-  useEffect(() => {
-    fetchJobDetails();
-  }, [id]);
+  useFocusEffect(
+    React.useCallback(() => {
+      fetchJobDetails();
+    }, [id])
+  );
 
   const fetchJobDetails = async () => {
     try {

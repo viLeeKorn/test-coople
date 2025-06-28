@@ -1,9 +1,25 @@
 import { Tabs } from 'expo-router';
 import { MaterialIcons } from '@expo/vector-icons';
+import { useThemeColors } from 'src/Config/ThemeProvider';
 
 export default function TabsLayout() {
+  const colors = useThemeColors();
+
   return (
-    <Tabs>
+    <Tabs
+      screenOptions={{
+        tabBarStyle: {
+          backgroundColor: colors.backgroundCard,
+          borderTopColor: colors.borderLight,
+          borderTopWidth: 1,
+        },
+        tabBarActiveTintColor: colors.primary500,
+        tabBarInactiveTintColor: colors.textMuted,
+        tabBarLabelStyle: {
+          color: colors.textSecondary,
+        },
+      }}
+    >
       <Tabs.Screen
         name="jobs"
         options={{

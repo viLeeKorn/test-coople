@@ -8,7 +8,18 @@
     "allowJs": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
-    "resolveJsonModule": true
+    "resolveJsonModule": true,
+    "baseUrl": ".",
+    "paths": {
+      "#Screens/*": ["src/Screens/*"],
+      "#Utils/*": ["src/Utils/*"],
+      "#Components/*": ["src/Components/*"],
+      "#config/*": ["src/Config/*"],
+      "#Api": ["src/Api/index.ts"],
+      "#Api/*": ["src/Api/*"],
+      "#Hooks": ["src/Hooks/index.ts"],
+      "#Hooks/*": ["src/Hooks/*"]
+    }
   },
   "include": ["**/*.ts", "**/*.tsx"],
   "exclude": [
